@@ -15,9 +15,9 @@ contract PrivacyTest is Test {
     }
 
     function testUnlock() public{
-        uint256 slot = 4;
-        bytes16 target_data = bytes16(vm.load(address(privacy),bytes32(slot)));
-        privacy.unlock(target_data);
+        uint256 slot = 5; // The first element [0] of the array is on slot 3 so the third element [2] is on slot 5
+        bytes32 target_data = vm.load(address(privacy),bytes32(slot));
+        privacy.unlock(bytes16(target_data)); // The loaded value is a bytes32 so we should cast it to bytes16
         assertTrue(privacy.locked() == false);
     }
 }
